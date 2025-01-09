@@ -12,10 +12,10 @@ import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
-import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 import jakarta.annotation.security.RolesAllowed;
@@ -71,18 +71,18 @@ public class TechnicalEvaluationView extends Composite<VerticalLayout> {
 
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
-        getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.START);
-        getContent().setAlignItems(FlexComponent.Alignment.CENTER);
+        getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+        getContent().setAlignItems(Alignment.CENTER);
 
         layoutColumn2.setWidthFull();
         getContent().setFlexGrow(1.0, layoutColumn2);
         layoutColumn2.setWidth("100%");
-        layoutColumn2.setMaxWidth("800px"); // Restringir el ancho máximo para dispositivos más grandes
+        layoutColumn2.setMaxWidth("800px");
         layoutColumn2.setHeight("min-content");
 
-        formLayout2Col.setWidthFull();
+        formLayout2Col.setWidth("100%");
         comboBox.setLabel(i18nProvider.getTranslation("technical_evaluation.select_project", getLocale()));
-        comboBox.setWidthFull();
+        comboBox.setWidth("min-content");
 
         // Llenar ComboBox con datos de proyectos
         proyectoService.setSelectProjects(comboBox);
@@ -144,8 +144,8 @@ public class TechnicalEvaluationView extends Composite<VerticalLayout> {
         });
 
         h2.setText(i18nProvider.getTranslation("technical_evaluation.product_quality", getLocale()));
-        layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, h2);
-        h2.setWidth("100%");
+        layoutColumn2.setAlignSelf(Alignment.CENTER, h2);
+        h2.setWidth("max-content");
 
         // Añadir subcategorías para la calidad del producto
         ComboBox<Integer> calidadAdecuacionFuncional = new ComboBox<>(i18nProvider.getTranslation("technical_evaluation.functional_adequacy", getLocale()));
@@ -164,8 +164,8 @@ public class TechnicalEvaluationView extends Composite<VerticalLayout> {
         calidadSeguridad.setItems(getNumericOptions());
 
         h22.setText(i18nProvider.getTranslation("technical_evaluation.management_support", getLocale()));
-        layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, h22);
-        h22.setWidth("100%");
+        layoutColumn2.setAlignSelf(Alignment.CENTER, h22);
+        h22.setWidth("max-content");
 
         // Añadir subcategorías para la gestión y soporte
         ComboBox<Integer> gestionGarantia = new ComboBox<>(i18nProvider.getTranslation("technical_evaluation.warranty", getLocale()));
@@ -243,12 +243,10 @@ public class TechnicalEvaluationView extends Composite<VerticalLayout> {
 
         // Estructura de diseño
         layoutColumn2.add(h2, formLayout2Col, hr, h22, formLayout2Col, hr4, buttonPrimary, downloadButton, downloadButton2, calificacionTecnicaLabel);
-        layoutColumn2.setAlignItems(FlexComponent.Alignment.START);
-        layoutColumn2.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
-        layoutColumn2.setWidthFull();
-
+        layoutColumn2.setAlignItems(Alignment.CENTER);
 
         // Asignar el layout final
+        getContent().add(layoutColumn2);
         getContent().add(layoutColumn2);
         layoutColumn2.add(formLayout2Col);
         formLayout2Col.add(comboBox);
@@ -278,7 +276,7 @@ public class TechnicalEvaluationView extends Composite<VerticalLayout> {
 
     private List<Integer> getNumericOptions() {
         List<Integer> options = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 0; i <= 10; i++) {
             options.add(i);
         }
         return options;
