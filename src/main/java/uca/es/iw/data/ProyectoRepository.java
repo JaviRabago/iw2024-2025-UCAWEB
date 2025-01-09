@@ -13,7 +13,7 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Long>, JpaSp
 
     SELECT nombre_corto
     FROM proyecto
-    WHERE estado = 'PENDIENTE'
+    WHERE estado = 'AVALADO'
     ORDER BY nombre_corto ASC;
     """, nativeQuery = true)
     List<String> findPendingProjects();
