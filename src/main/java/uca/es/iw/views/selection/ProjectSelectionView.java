@@ -105,14 +105,26 @@ public class ProjectSelectionView extends VerticalLayout {
             comboBox.setValue(getProjectState(project));
 
             comboBox.addValueChangeListener(event -> {
-                updateProjectState(project, event.getOldValue(), event.getValue());
+                String newStateInSpanish = convertToSpanish(event.getValue());
+                updateProjectState(project, event.getOldValue(), newStateInSpanish);
                 updateStats();
             });
 
             return comboBox;
         }).setHeader(i18nProvider.getTranslation("project_selection.state", getLocale()));
     }
-
+    private String convertToSpanish(String state) {
+        switch (state) {
+            case "Pending":
+                return "Pendiente";
+            case "Accepted":
+                return "Aceptado";
+            case "Rejected":
+                return "Rechazado";
+            default:
+                return state;
+        }
+    }
     private void loadProjects(Convocatoria convocatoria) {
         List<Proyecto> proyectos;
         if (convocatoria == null) {
