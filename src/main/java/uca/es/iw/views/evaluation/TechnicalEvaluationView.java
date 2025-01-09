@@ -12,7 +12,6 @@ import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
@@ -73,17 +72,17 @@ public class TechnicalEvaluationView extends Composite<VerticalLayout> {
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.START);
-        getContent().setAlignItems(Alignment.CENTER);
+        getContent().setAlignItems(FlexComponent.Alignment.CENTER);
 
         layoutColumn2.setWidthFull();
         getContent().setFlexGrow(1.0, layoutColumn2);
         layoutColumn2.setWidth("100%");
-        layoutColumn2.setMaxWidth("800px");
+        layoutColumn2.setMaxWidth("800px"); // Restringir el ancho máximo para dispositivos más grandes
         layoutColumn2.setHeight("min-content");
 
-        formLayout2Col.setWidth("100%");
+        formLayout2Col.setWidthFull();
         comboBox.setLabel(i18nProvider.getTranslation("technical_evaluation.select_project", getLocale()));
-        comboBox.setWidth("min-content");
+        comboBox.setWidthFull();
 
         // Llenar ComboBox con datos de proyectos
         proyectoService.setSelectProjects(comboBox);
@@ -145,8 +144,8 @@ public class TechnicalEvaluationView extends Composite<VerticalLayout> {
         });
 
         h2.setText(i18nProvider.getTranslation("technical_evaluation.product_quality", getLocale()));
-        layoutColumn2.setAlignSelf(Alignment.CENTER, h2);
-        h2.setWidth("max-content");
+        layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, h2);
+        h2.setWidth("100%");
 
         // Añadir subcategorías para la calidad del producto
         ComboBox<Integer> calidadAdecuacionFuncional = new ComboBox<>(i18nProvider.getTranslation("technical_evaluation.functional_adequacy", getLocale()));
@@ -165,8 +164,8 @@ public class TechnicalEvaluationView extends Composite<VerticalLayout> {
         calidadSeguridad.setItems(getNumericOptions());
 
         h22.setText(i18nProvider.getTranslation("technical_evaluation.management_support", getLocale()));
-        layoutColumn2.setAlignSelf(Alignment.CENTER, h22);
-        h22.setWidth("max-content");
+        layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, h22);
+        h22.setWidth("100%");
 
         // Añadir subcategorías para la gestión y soporte
         ComboBox<Integer> gestionGarantia = new ComboBox<>(i18nProvider.getTranslation("technical_evaluation.warranty", getLocale()));
@@ -244,15 +243,42 @@ public class TechnicalEvaluationView extends Composite<VerticalLayout> {
 
         // Estructura de diseño
         layoutColumn2.add(h2, formLayout2Col, hr, h22, formLayout2Col, hr4, buttonPrimary, downloadButton, downloadButton2, calificacionTecnicaLabel);
-        layoutColumn2.setAlignItems(Alignment.CENTER);
+        layoutColumn2.setAlignItems(FlexComponent.Alignment.START);
+        layoutColumn2.setJustifyContentMode(FlexComponent.JustifyContentMode.START);
+        layoutColumn2.setWidthFull();
+
 
         // Asignar el layout final
         getContent().add(layoutColumn2);
+        layoutColumn2.add(formLayout2Col);
+        formLayout2Col.add(comboBox);
+        layoutColumn2.add(downloadButton); // Añadir botón de descarga debajo del ComboBox
+        layoutColumn2.add(downloadButton2); // Añadir botón de descarga debajo del ComboBox
+        layoutColumn2.add(calificacionTecnicaLabel); // Añadir label de calificación técnica
+        layoutColumn2.add(hr);
+        layoutColumn2.add(h2);
+        layoutColumn2.add(hr2);
+        layoutColumn2.add(calidadAdecuacionFuncional);
+        layoutColumn2.add(calidadMantenibilidad);
+        layoutColumn2.add(calidadPortabilidad);
+        layoutColumn2.add(calidadEficiencia);
+        layoutColumn2.add(calidadUsabilidad);
+        layoutColumn2.add(calidadCompatibilidad);
+        layoutColumn2.add(calidadSeguridad);
+        layoutColumn2.add(hr3);
+        layoutColumn2.add(h22);
+        layoutColumn2.add(hr4);
+        layoutColumn2.add(gestionGarantia);
+        layoutColumn2.add(gestionTiempoRespuesta);
+        layoutColumn2.add(gestionAtencionCliente);
+        layoutColumn2.add(gestionDocumentacion);
+        layoutColumn2.add(layoutRow);
+        layoutRow.add(buttonPrimary);
     }
 
     private List<Integer> getNumericOptions() {
         List<Integer> options = new ArrayList<>();
-        for (int i = 0; i <= 10; i++) {
+        for (int i = 1; i <= 5; i++) {
             options.add(i);
         }
         return options;
