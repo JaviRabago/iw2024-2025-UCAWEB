@@ -21,8 +21,11 @@ jobs:
         with:
           java-version: '23'
 
+      - name: Set execute permission for Maven Wrapper
+        run: chmod +x ./mvnw
+
       - name: Build with Maven
-        run: mvn clean install
+        run: ./mvnw clean package -Pproduction
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
